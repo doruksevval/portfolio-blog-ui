@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="tr"> <!-- Sayfa dili Türkçe -->
+<head>
+    <meta charset="UTF-8"> <!-- Türkçe karakter desteği -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobil uyumluluk için görüntü alanı ayarı -->
+    <title>Kişisel Portfolyom</title> <!-- Sekme başlığı -->
+    <style> 
+
+        /* ========================================= */
+        /* === HAFTA 1: CSS Değişkenleri ve Seçiciler === */
+        /* ========================================= */
+
+        :root { /* Kök eleman - tüm sayfada geçerli değişkenler */
+            --ana-renk: #8B0000; /* Koyu mavi - başlık ve gezinme rengi */
+            --vurgu-renk: #e74c3c; /* Kırmızı - dikkat çekici öğeler için */
+            --arka-plan: #ecf0f1; /* Açık gri - sayfa arka planı */
+            --metin-renk: #333; /* Koyu gri - okunabilir metin rengi */
+            --bosluk: 1rem; /* Standart boşluk birimi */
+        }
+
+        * { /* Evrensel seçici - tüm öğelere uygulanır */
+            margin: 0; /* Dış boşlukları sıfırla */
+            padding: 0; /* İç boşlukları sıfırla */
+            box-sizing: border-box; /* Kutu modeli: dolgu ve kenarlık genişliğe dahil */
+        }
+
+        body { /* Sayfa gövdesi */
+            font-family: Arial, sans-serif; /* Yazı tipi */
+            color: var(--metin-renk); /* Metin rengi değişkenden */
+            background-color: var(--arka-plan); /* Arka plan rengi değişkenden */
+        }
+
+        h1, h2 { /* Grup seçici - başlıklar için */
+            color: var(--ana-renk); /* Başlık rengi değişkenden */
+        }
+
+        a { /* Tüm bağlantılar */
+            text-decoration: none; /* Alt çizgiyi kaldır */
+            color: inherit; /* Rengi üst öğeden al */
+        }
+
+        a:hover{ /* Sözde sınıf - fare üzerine gelince */
+            color: var(--vurgu-renk); /* Vurgu rengine geç */
+        }
+
+        section:not(:last-child) { /* Olumsuzluk seçici - son bölüm hariç */
+            margin-bottom: calc(var(--bosluk) * 5); /* Hesaplanmış alt boşluk */
+        }
+
+        /* ========================================= */
+        /* === HAFTA 2: Flexbox - Yön ve Hizalama  === */
+        /* ========================================= */
+
+        nav { /* Gezinme çubuğu */
+            display: flex;/* Esnek kutu düzeni etkinleştir */
+            justify-content: space-between; /* Öğeleri iki uca yasla */
+            align-items: center; /* Dikey ortala */
+            background-color: var(--ana-renk); /* Arka plan rengi */
+            padding: var(--bosluk); /* İç boşluk */
+        }
+
+        nav .logo { /* Logo alanı */
+            color:white; /* Beyaz metin */
+            font-size: 2.0rem; /* Yazı boyutu */
+            font-weight: bold; /* Kalın yazı */
+        }
+
+        nav ul { /* Menü listesi */
+            display: flex; /* Yatay sıralama için flex */
+            flex-direction: row; /* Yön: soldan sağa */
+            list-style: none; /* Liste işaretlerini kaldır */
+            gap: var(--bosluk); /* Öğeler arası boşluk */
+        }
+
+        nav ul li a { /* Menü bağlantıları */
+            color: white; /* Beyaz metin */
+            padding: 0.5rem; /* İç boşluk */
+        }
+
+        .kahraman { /* Kahraman bölümü */
+            display: flex; /* Esnek kutu düzeni */
+            flex-direction: column; /* Yön: yukarıdan aşağıya */
+            justify-content: center; /* Dikey ortala */
+            align-items: center; /* Yatay ortala */
+            height: 50vh; /* Ekran yüksekliğinin yarısı */
+            background-color: var(--ana-renk); /* Arka plan */
+            color: white; /* Beyaz metin */
+            text-align: center; /* Metni ortala */
+            padding: var(--bosluk); /* İç boşluk */
+        }
+
+        /* ========================================= */
+        /* === HAFTA 3: Flexbox - Sarmalama        === */
+        /* ========================================= */
+
+        .beceriler { /* Beceri kartları kabı */
+            display: flex; /* Esnek kutu düzeni */
+            flex-wrap: wrap; /* Sığmazsa alt satıra kaydır */
+            justify-content: center; /* Kartları ortala */
+            gap: var(--bosluk); /* Kartlar arası boşluk */
+            padding: var(--bosluk); /* Dış boşluk */
+        }
+
+        .beceri-karti { /* Tek bir beceri kartı */
+            flex: 0 1 200px; /* Büyüme yok, küçülme var, taban genişlik 200px */
+            background-color: white; /* Beyaz arka plan */
+            padding: var(--bosluk); /* İç boşluk */
+            border-radius: 8px; /* Yuvarlatılmış köşeler */
+            text-align: center; /* Metni ortala */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Hafif gölge */
+        }
+
+        /* ========================================= */
+        /* === HAFTA 4: CSS Grid - Izgara Düzeni    === */
+        /* ========================================= */
+
+        .projeler { /* Proje galerisi kabı */
+            display: grid; /* Izgara düzeni etkinleştir */
+            grid-template-columns: repeat(3, 1fr); /* 3 eşit sütun */
+            gap: var(--bosluk); /* Izgara boşluğu */
+            padding: var(--bosluk); /* İç boşluk */
+        }
+
+        .proje-karti { /* Tek bir proje kartı */
+            background-color: white; /* Beyaz arka plan */
+            padding: var(--bosluk); /* İç boşluk */
+            border-radius: 8px; /* Yuvarlatılmış köşeler */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Hafif gölge */
+        }
+
+        .proje-karti h3 { /* Proje kartı başlığı */
+            margin-bottom: 0.5rem; /* Başlık altı boşluk */
+            color: var(--ana-renk); /* Başlık rengi */
+        }
+
+        footer { /* Alt bilgi alanı */
+            display: grid; /* Izgara düzeni */
+            grid-template-columns: 1fr 1fr; /* 2 eşit sütun */
+            gap: var(--bosluk); /* Sütunlar arası boşluk */
+            background-color: var(--ana-renk); /* Arka plan */
+            color: white; /* Beyaz metin */
+            padding: var(--bosluk); /* İç boşluk */
+        }
+
+        /* ========================================= */
+        /* === HAFTA 5: Duyarlı Tasarım            === */
+        /* ========================================= */
+
+        @media (max-width: 768px) { /* Ekran genişliği 768px ve altı ise */
+
+            nav { /* Gezinme çubuğu - mobil */
+                flex-direction: column; /* Dikey sıralama */
+                gap: 0.5rem; /* Öğeler arası boşluk */
+            }
+
+            .projeler { /* Proje galerisi - mobil */
+                grid-template-columns: 1fr; /* Tek sütun */
+            }
+
+            footer { /* Alt bilgi - mobil */
+                grid-template-columns: 1fr; /* Tek sütun */
+            }
+
+            .kahraman { /* Kahraman bölümü - mobil */
+                height: auto; /* Otomatik yükseklik */
+                padding: calc(var(--bosluk) * 2); /* Daha fazla iç boşluk */
+            }
+        }
+
+        /* ========================================= */
+        /* === HAFTA 6: Geçişler ve Animasyonlar   === */
+        /* ========================================= */
+
+        .beceri-karti { /* Beceri kartına geçiş efekti */
+            transition: transform 0.3s ease; /* Dönüşüm 0.3 saniyede yumuşak geçiş */
+        }
+
+        .beceri-karti:hover { /* Fare üzerine gelince */
+            transform: scale(1.05); /* %5 büyüt */
+        }
+
+        .proje-karti { /* Proje kartına geçiş efekti */
+            transition: box-shadow 0.3s ease; /* Gölge geçişi */
+        }
+
+        .proje-karti:hover { /* Fare üzerine gelince */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Daha belirgin gölge */
+        }
+
+        nav ul li a { /* Menü bağlantılarına geçiş efekti */
+            transition: color 0.2s ease; /* Renk geçişi */
+        }
+
+        @keyframes belirme { /* Animasyon tanımı - belirme efekti */
+            from { /* Başlangıç durumu */
+                opacity: 0; /* Görünmez */
+                transform: translateY(20px); /* 20px aşağıda */
+            }
+            to { /* Bitiş durumu */
+                opacity: 1; /* Tam görünür */
+                transform: translateY(0); /* Asıl konumunda */
+            }
+        }
+
+        .kahraman h1 { /* Kahraman başlığı animasyonu */
+            animation: belirme 1s ease; /* 1 saniyede belirme */
+        }
+
+        .kahraman p { /* Kahraman açıklaması animasyonu */
+            animation: belirme 1s ease 0.3s; /* 0.3 saniye gecikmeli belirme */
+            animation-fill-mode: both; /* Animasyon öncesi ve sonrası durumu koru */
+            .proje-karti {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.proje-karti:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.proje-karti:active {
+    transform: scale(0.97);
+}
+
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- HAFTA 2: Flexbox ile gezinme çubuğu -->
+    <nav>
+        <div class="logo">Portfolyom</div> <!-- Site logosu -->
+        <ul>
+            <li><a href="#hakkimda">Hakkımda</a></li> <!-- Menü öğesi -->
+            <li><a href="#beceriler">Beceriler</a></li> <!-- Menü öğesi -->
+            <li><a href="#projeler">Projeler</a></li> <!-- Menü öğesi -->
+            <li><a href="#iletisim">İletişim</a></li> <!-- Menü öğesi -->
+        </ul>
+    </nav>
+
+    <!-- HAFTA 2: Flexbox ile kahraman bölümü -->
+    <section class="kahraman">
+        <h1 style="color:white;">ŞEVVAL DORUK</h1>
+        <p>Web geliştirici adayı</p> <!-- Alt başlık -->
+    </section>
+    <!-- HAKKIMDA BÖLÜMÜ -->
+<section id="hakkimda" style="padding:2rem; text-align:center;">
+    <h2>Hakkımda</h2>
+    <p style="max-width:600px; margin:1rem auto;">
+         Merhaba, ben web geliştirme alanına ilgi duyan biriyim. Yeni şeyler öğrenmeyi, 
+    küçük projeler geliştirerek kendimi geliştirmeyi seviyorum.Şu an HTML, CSS ve 
+    JavaScript üzerine çalışıyor ve bu alanda ilerlemeyi hedefliyorum.
+    </p>
+</section>
+
+    <!-- HAFTA 3: Flexbox sarmalama ile beceri kartları -->
+    <section id="beceriler">
+        <h2 style="text-align:center; padding:1rem;">Becerilerim</h2> <!-- Bölüm başlığı -->
+        <div class="beceriler">
+            <div class="beceri-karti">HTML</div> <!-- Beceri kartı -->
+            <div class="beceri-karti">CSS</div> <!-- Beceri kartı -->
+            <div class="beceri-karti">JavaScript</div> <!-- Beceri kartı -->
+            <div class="beceri-karti">Tasarım</div> <!-- Beceri kartı -->
+             <div class="beceri-karti">C++</div> <!-- Beceri kartı -->
+              <div class="beceri-karti">GitHub</div> <!-- Beceri kartı -->
+            
+        </div>
+    </section>
+
+    <!-- HAFTA 4: CSS Grid ile proje galerisi -->
+    <section id="projeler">
+        <h2 style="text-align:center; padding:1rem;">Projelerim</h2> <!-- Bölüm başlığı -->
+        <div class="projeler">
+        <a href="https://github.com/doruksevval/25350089-kisisel-blog.git" target="_blank">
+            <div class="proje-karti"> <!-- Proje kartı -->
+                <h3>Proje 1</h3> <!-- Proje adı -->
+                <p>HTML, CSS ve JavaScript kullanılarak geliştirilmiş blog projesi</p> <!-- Proje açıklaması -->
+            </div>
+            </a>
+            <a href="https://github.com/doruksevval/25350089-KART-TASARIMI.git" target="_blank">
+    <div class="proje-karti">
+        <h3>Proje 2</h3>
+        <p>HTML ve CSS kullanılarak oluşturulmuş kart tasarımı projesidir.</p>
+      </div>
+     </a>
+            <div class="proje-karti"> <!-- Proje kartı -->
+                <h3>Proje 3</h3> <!-- Proje adı -->
+                <p>Hesap makinesi</p> <!-- Proje açıklaması -->
+             </div>
+             </div>
+    </section>
+
+    <!-- HAFTA 4: CSS Grid ile alt bilgi -->
+    <footer id="iletisim">
+        <div> <!-- Sol sütun -->
+            <h3>İletişim</h3> <!-- Sütun başlığı -->
+            <p>sevval.doruk46@gmail.com</p><!--E-Mail-->
+            <p>
+  <a href="telefon:+905XXXXXXXXX">+90 5XX XXX XX XX</a>
+</p><!--telefon numarası-->
+        </div>
+         <div>
+        <h3>Sosyal Medya</h3>
+
+        <a href="https://github.com/doruksevval" target="_blank">GitHub</a><br>
+        <a href="https://www.linkedin.com/feed/" target="_blank">LinkedIn</a>
+    </div>
+    </footer>
+
+</body>
+</html>
